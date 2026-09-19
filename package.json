@@ -1,0 +1,14 @@
+{
+  "name": "company-enrich",
+  "version": "1.0.0",
+  "description": "Turn a list of company domains into verified CRM rows: fetch the site, extract fields with an LLM, verify every value against a verbatim quote, review, insert.",
+  "private": true,
+  "type": "commonjs",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.11"
+  },
+  "dependencies": {
+    "pg": "^8.13.1"
+  }
+}

@@ -1,0 +1,15 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Per-list working data: inputs, dedupe buckets, enrichment results, batch
+# bookkeeping. Only lists/<name>/README.md and corrections.js belong in git.
+lists/*/*
+!lists/*/README.md
+!lists/*/corrections.js
+results_*.json
+
+# Standard noise
+node_modules/
+.DS_Store
