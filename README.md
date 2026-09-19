@@ -6,7 +6,7 @@ website, extract a handful of fields with an LLM, **verify every field
 against a verbatim quote from the page**, put the batch in front of a human,
 then insert in one transaction.
 
-Built and run in production at a two-person B2B food-trading company, where
+Built and run in production at a small B2B food-trading company, where
 the address lists feed weekly offer mailings and a wrong "buyer/seller" or
 country costs real sends. Node.js, Postgres, one npm dependency.
 
@@ -37,7 +37,7 @@ page, and anything that fails is dropped rather than trusted.
 - **Extract with proof** — one OpenRouter call returns 7 fields, each paired
   with a `*_quote` that must be a verbatim excerpt. The code normalises
   whitespace and checks every quote is a substring of the fetched text;
-  unverified fields are nulled and listed under `_rejected_unverified_quotes`.
+  unverified fields are rejected and listed separately in the result.
   Closed-set fields (role, type, category) are rejected if outside the set.
 - **Never let the model use the domain as evidence** — the prompt forbids
   inferring country from the TLD. A separate, deterministic ccTLD fallback
@@ -65,7 +65,7 @@ page, and anything that fails is dropped rather than trusted.
 | Real bugs found and fixed during that run | 11 |
 | Fetch sources, in fallback order | 3 (+ the plain-HTTP retry) |
 | Fields extracted per company, each with a verbatim quote | 7 |
-| Free-mail / ISP / directory domains that can never become a company key | 215 (+7 suffix rules) |
+| Free-mail / ISP / directory domains that can never become a company key | 215 exact domains, plus 7 suffix patterns |
 | Contacts that had silently merged under free-mail "companies" before that blocklist existed | 331 across 42 fake rows |
 | Unrelated companies merged under directory/aggregator domains in one register import | 1,025 into 73 fake rows |
 
