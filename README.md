@@ -141,11 +141,17 @@ directories, registries. Every entry was added after it caused a real merge.
 
 ## Run it
 
-```sh
-cp .env.example .env        # keys, Postgres, and your own rules
-npm install                 # installs pg, nothing else
-psql -f schema.sql          # three tables, one view
+You need: **Node.js 18+**, a **Postgres** database (local, Docker, or a
+free hosted one), and API keys — **OpenRouter** (required, pay-per-call)
+and **Jina Reader** (free tier is enough). DataForSEO is optional: without
+it the fetch falls through to the next source. A terminal, no GUI.
 
+```sh
+cp .env.example .env                  # keys, Postgres, and your own rules
+npm install                           # installs pg, nothing else
+psql -d <your_database> -f schema.sql # three tables, one view
+
+# input.csv: a header row with "domain" (optionally name, url, country)
 node dedupe.js --list lists/demo --domains input.csv
 node enrich.js --list lists/demo --next 20
 node review_table.js --list lists/demo --quotes
@@ -156,8 +162,6 @@ node insert_batch.js --list lists/demo --source demo --apply
 
 Every script prints `--help`. Every writing script is a dry run unless
 `--apply` is given. `enrich.js` never writes to the database at all.
-
-Node ≥ 18 (native `fetch`, `util.parseArgs`).
 
 ## What I would change
 

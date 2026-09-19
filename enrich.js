@@ -95,14 +95,15 @@ function countryFromCcTld(domain) {
 }
 
 async function fetchViaJina(url) {
-  const res = await fetch(`https://r.jina.ai/${url}`, {
-    headers: {
-      Authorization: `Bearer ${process.env.JINA_API_KEY}`,
-      'X-Retain-Images': 'none',
-      'X-With-Links-Summary': 'all',
-      'X-No-Cache': 'true',
-    },
-  });
+  // Jina Reader works without a key at a lower rate limit; only send the
+  // header when there is one, a blank "Bearer " is rejected.
+  const headers = {
+    'X-Retain-Images': 'none',
+    'X-With-Links-Summary': 'all',
+    'X-No-Cache': 'true',
+  };
+  if (process.env.JINA_API_KEY) headers.Authorization = `Bearer ${process.env.JINA_API_KEY}`;
+  const res = await fetch(`https://r.jina.ai/${url}`, { headers });
   const text = await res.text();
   if (!res.ok) throw new Error(`Jina ${res.status}: ${text.slice(0, 200)}`);
   return text;
