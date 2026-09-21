@@ -32,7 +32,7 @@ CREATE UNIQUE INDEX IF NOT EXISTS contacts_email_lower ON contacts (lower(email)
 CREATE TABLE IF NOT EXISTS outreach_log (
   id          serial PRIMARY KEY,
   company_key text REFERENCES companies (company_key),
-  email       text,
+  contact_email text,
   status      text CHECK (status IN ('sent', 'bounced', 'replied', 'inbound')),
   event_date  date
 );
