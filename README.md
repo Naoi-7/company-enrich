@@ -6,7 +6,7 @@ website, extract a handful of fields with an LLM, **verify every field
 against a verbatim quote from the page**, put the batch in front of a human,
 then insert in one transaction.
 
-Built and run in production at a small B2B food-trading company, where
+Built and run in production at a B2B food-trading company, where
 the address lists feed weekly offer mailings and a wrong "buyer/seller" or
 country costs real sends. Node.js, Postgres, one npm dependency.
 
